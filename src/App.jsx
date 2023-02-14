@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ErrorPage from "./error/errorPage";
 import ChatPage from "./page/ChatPage";
 import HomePage from "./page/HomePage";
 import LoginPage from "./page/LoginPage";
@@ -23,7 +24,7 @@ function App() {
         <Route path="/selectedplayer" element={<SelectedPlayerPage />} />
        
                {/* erro Page */}
-          {/* <Route path="*" element={<PageNotFound/>} />  */}
+          <Route path="*" element={<ErrorPage/>} /> 
         
       </Routes>
     </BrowserRouter>

@@ -1,31 +1,30 @@
 import React from "react";
-// import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import  {siginupValidation} from "../../helpers/validate";
 function SignUp() {
-
-  const navigate = useNavigate()
-    const Formik = useFormik({
-        initialValues: {
-          fullname: "",
-          email: "",
-          phone:"",
-          password: "",
-        },
-        validate :siginupValidation,
-        validateOnBlur: false,
-        validateOnChange: false,
-        onSubmit: async (values) => {
-            console.log(values);
-          },
-        // onSubmit: async (values) => {
-        //   await axios.post('http://localhost:7007/api/userSignup',{values}).then((res)=>{
-        //     console.log(res)
-        //   })
-        // },
-      });
+  const navigate = useNavigate();
+  const Formik = useFormik({
+    initialValues: {
+      fullname: "",
+      email: "",
+      phone:"",
+      password: "",
+    },
+    validate :siginupValidation,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      await axios.post('http://localhost:7007/api/scout/scoutSignup',{values}).then((res)=>{
+        navigate('/login')
+      }).catch((error)=>{
+        console.log(error)
+        toast.error(error.response.data.error)
+      })
+    },
+  });
   return (
     <div>
      
@@ -115,7 +114,7 @@ function SignUp() {
                   <div id="button" class="flex flex-col w-full my-5">
                     <button
                       type="submit  "
-                      class="   w-full py-4 bg-green-600/50 hover:translate-x-3.5 rounded-lg text-green-100" 
+                      class="w-full py-4 bg-green-600/50 hover:translate-x-3.5 rounded-lg text-green-100" 
                     >
                         Sign Up
                     </button>
@@ -128,7 +127,7 @@ function SignUp() {
                       </a> */}
                       <a
                         href=""
-                        onClick={()=>{navigate('login')}}
+                        onClick={()=>{navigate('/login')}}
                         class="w-full text-center font-medium text-gray-500" 
                       >
                         alredy  have an account

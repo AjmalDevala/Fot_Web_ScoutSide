@@ -1,11 +1,14 @@
-import React from 'react'
-// import axios from "axios";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import  {loginValidation} from "../../helpers/validate";
+import axios from "axios";
+
 function Login() {
-  const navigate =useNavigate()
+
+  
+  const navigate = useNavigate();
   const Formik = useFormik({
     initialValues: {
       email: "",
@@ -15,12 +18,18 @@ function Login() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      console.log(values);
-    },
-});
-  return (
+      await axios.post('http://localhost:7007/api/scout/scoutLogin',{values}).then((res)=>{
+        navigate('/')
+      }).catch((error)=>{
+        console.log(error)
+        toast.error(error.response.data.error)
+      }) 
+  }});    
+ 
+  return ( 
 <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-<Toaster position='top-center'></Toaster>
+   
+<Toaster position='top-center' ></Toaster>
   <div class="mx-auto max-w-lg">
     <h1 class="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
       Get started today
@@ -31,7 +40,7 @@ function Login() {
       dolores deleniti inventore quaerat mollitia?
     </p>
 
-    <form action="" class="mt-6 mb-0 space-y-4 rounded-lg p-8 shadow-2xl" onClick={Formik.handleSubmit}>
+    <form  class="mt-6 mb-0 space-y-4 rounded-lg p-8 shadow-2xl" onClick={Formik.handleSubmit}>
       <p class="text-lg font-medium">Sign in to your account</p>
 
       <div>
@@ -114,6 +123,7 @@ function Login() {
         <a onClick={()=>{navigate("/signup")}} class="underline" href="">Sign up</a>
       </p>
     </form>
+
   </div>
 </div>
 
