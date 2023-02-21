@@ -1,6 +1,15 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 function Player() {
+  const [player, setPlayer] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:7007/api/admin/allplayer").then((response) => {
+      console.log(response.data, "0987654dyuio");
+      setPlayer(response.data.player);
+    });
+  }, []);
+
   return (
     <div>
       <link
@@ -11,15 +20,15 @@ function Player() {
       {/* <!-- Page Container --> */}
       <div class="flex items-center justify-center min-h-screen bg-white ">
         <div class="flex flex-col">
-          <div class="flex flex-col mt-8">
+          <div class="flex flex-col ">
             {/* <!-- Meet the Team --> */}
             <div class="container max-w-7xl px-4">
               {/* <!-- Section Header --> */}
-              <div class="flex flex-wrap justify-center text-center mb-24">
+              <div class="flex flex-wrap justify-center text-center ">
                 <div class="w-full lg:w-6/12 px-4">
                   {/* <!-- Header --> */}
-                  <h1 class="text-gray-900 text-4xl font-bold mb-8">
-                    Meet the players                        
+                  <h1 class="text-gray-900 text-4xl font-bold mb-7">
+                    Meet the players
                   </h1>
 
                   {/* <!-- Description --> */}
@@ -33,191 +42,45 @@ function Player() {
                 </div>
               </div>
 
-              {/* <!-- Team Members --> */}
-              <div class="flex flex-wrap">
-                {/* <!-- Member #1 --> */}
-                <div class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
-                  <div class="flex flex-col">
-                    {/* <!-- Avatar --> */}
-                    <a href="#" class="mx-auto">
-                      <img
-                        class="rounded-2xl w-72 h-72 drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
-                        src="/src/assets/images/images.jpeg"
-                      />
-                    </a>
-
-                    {/* <!-- Details --> */}
-                    <div class="text-center mt-6">
-                      {/* <!-- Name --> */}
-                      <h1 class="text-gray-900 text-xl font-bold mb-1">
-                        Tranter Jaskulski
-                      </h1>
-
-                      {/* <!-- Title --> */}
-                      <div class="text-cyan-500 font-extrabold mb-2">left wing back</div>
-
-                      {/* <!-- Social Icons --> */}
-                      <div
-                        class=" items-center justify-center opacity-50 
-                                transition-opacity duration-300"> 
-                                
-                    <p class="text-base text-body-color leading-loose ">
-                     Nationality   : <span className="text-orange-500">india</span>
-                  </p>
-                   <div>
-                    <p class="text-base text-body-color leading-loose ">
-                     Age  : <span className="text-orange-500">23</span>
-                  </p>
-                   </div>
-                   <div>
-                    <p class="text-base text-body-color leading-loose ">
-                     current Team : <span className="text-orange-500">TCL PLAYER</span>
-                  </p>
-                   </div>
+              <div className="bg-white">
+                <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">                     
+                  <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                    {player.map((player) => (
+                      <div key={player?.id} className="group relative">
+                        <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                          <img
+                            src={player?.profileUrl}
+                            alt="add"
+                            className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                          />
+                        </div>
+                        <p className="mt-1 text-xl text-blue-600 flex justify-center">
+                          {player?.position}
+                        </p>
+                        <div className="mt-4 flex justify-between">
+                          <div>
+                            <h3 className="text-lg text-bold text-">
+                              {player?.userId.fullname}
+                            </h3>
+                            <h4 className="text-base text-neutral-900">
+                              Age:
+                              {player?.age}
+                            </h4>
+                          </div>
+                          <p className="text-sm font-medium text-gray-900">
+                            {player?.nationality}
+                          </p>
+                        </div>
+                        <p className="text-sm flex justify-center  font-bold text-blue-600 ">
+                          {player?.currentTeam}
+                        </p>
+                        <div className="flex justify-center">
+                          <button class="mx-auto lg:mx-0 hover:none bg-emerald-200 text-gray-800 font-bold box-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                            Connect!
+                          </button>
+                        </div>
                       </div>
-                    <button class="mx-auto lg:mx-0 hover:none bg-sky-400/70 text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                      Connect!
-                    </button>
-                    
-                    </div>
-                  </div>
-                </div>
-                <div class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
-                  <div class="flex flex-col">
-                    {/* <!-- Avatar --> */}
-                    <a href="#" class="mx-auto">
-                      <img
-                        class="rounded-2xl w-72 h-72 drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
-                        src="/src/assets/images/images.jpeg"
-                      />
-                    </a>
-
-                    {/* <!-- Details --> */}
-                    <div class="text-center mt-6">
-                      {/* <!-- Name --> */}
-                      <h1 class="text-gray-900 text-xl font-bold mb-1">
-                        Tranter Jaskulski
-                      </h1>
-
-                      {/* <!-- Title --> */}
-                      <div class="text-cyan-500 font-extrabold mb-2">Goal keeper</div>
-
-                      {/* <!-- Social Icons --> */}
-                      <div
-                        class=" items-center justify-center opacity-50 
-                                transition-opacity duration-300"> 
-                                
-                    <p class="text-base text-body-color leading-loose ">
-                     Nationality   : <span className="text-orange-500">india</span>
-                  </p>
-                   <div>
-                    <p class="text-base text-body-color leading-loose ">
-                     Age  : <span className="text-orange-500">26</span>
-                  </p>
-                   </div>
-                   <div>
-                    <p class="text-base text-body-color leading-loose ">
-                     current Team : <span className="text-orange-500">DT PLAYER</span>
-                  </p>
-                   </div>
-                      </div>
-                    <button class="mx-auto lg:mx-0 hover:none bg-sky-400/70 text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                      Connect!
-                    </button>
-                    
-                    </div>
-                  </div>
-                </div>
-                <div class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
-                  <div class="flex flex-col">
-                    {/* <!-- Avatar --> */}
-                    <a href="#" class="mx-auto">
-                      <img
-                        class="rounded-2xl w-72 h-72 drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
-                        src="/src/assets/images/images.jpeg"
-                      />
-                    </a>
-
-                    {/* <!-- Details --> */}
-                    <div class="text-center mt-6">
-                      {/* <!-- Name --> */}
-                      <h1 class="text-gray-900 text-xl font-bold mb-1">
-                        Tranter Jaskulski
-                      </h1>
-
-                      {/* <!-- Title --> */}
-                      <div class="text-cyan-500 font-extrabold mb-2">Right wing back</div>
-
-                      {/* <!-- Social Icons --> */}
-                      <div
-                        class=" items-center justify-center opacity-50 
-                                transition-opacity duration-300"> 
-                                
-                    <p class="text-base text-body-color leading-loose ">
-                     Nationality   : <span className="text-orange-500">india</span>
-                  </p>
-                   <div>
-                    <p class="text-base text-body-color leading-loose ">
-                     Age  : <span className="text-orange-500">26</span>
-                  </p>
-                   </div>
-                   <div>
-                    <p class="text-base text-body-color leading-loose ">
-                     current Team : <span className="text-orange-500">BBC PLAYER</span>
-                  </p>
-                   </div>
-                      </div>
-                    <button class="mx-auto lg:mx-0 hover:none bg-sky-400/70 text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                      Connect!
-                    </button>
-                    
-                    </div>
-                  </div>
-                </div>
-                <div class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
-                  <div class="flex flex-col">
-                    {/* <!-- Avatar --> */}
-                    <a href="#" class="mx-auto">
-                      <img
-                        class="rounded-2xl w-72 h-72 drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
-                        src="/src/assets/images/images.jpeg"
-                      />
-                    </a>
-
-                    {/* <!-- Details --> */}
-                    <div class="text-center mt-6">
-                      {/* <!-- Name --> */}
-                      <h1 class="text-gray-900 text-xl font-bold mb-1">
-                        Tranter Jaskulski
-                      </h1>
-
-                      {/* <!-- Title --> */}
-                      <div class="text-cyan-500 font-extrabold mb-2">forward</div>
-
-                      {/* <!-- Social Icons --> */}
-                      <div
-                        class=" items-center justify-center opacity-50 
-                                transition-opacity duration-300"> 
-                                
-                    <p class="text-base text-body-color leading-loose ">
-                     Nationality   : <span className="text-orange-500">india</span>
-                  </p>
-                   <div>
-                    <p class="text-base text-body-color leading-loose ">
-                     Age  : <span className="text-orange-500">56</span>
-                  </p>
-                   </div>
-                   <div>
-                    <p class="text-base text-body-color leading-loose ">
-                     current Team : <span className="text-orange-500">DT PLAYER</span>
-                  </p>
-                   </div>
-                      </div>
-                    <button class="mx-auto lg:mx-0 hover:none bg-sky-400/70 text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                      Connect!
-                    </button>
-                    
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>

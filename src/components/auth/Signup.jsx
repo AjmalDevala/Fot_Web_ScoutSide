@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import  {siginupValidation} from "../../helpers/validate";
 function SignUp() {
@@ -18,7 +18,7 @@ function SignUp() {
     validateOnChange: false,
     onSubmit: async (values) => {
       await axios.post('http://localhost:7007/api/scout/scoutSignup',{values}).then((res)=>{
-        navigate('/login')
+        navigate('/')
       }).catch((error)=>{
         console.log(error)
         toast.error(error.response.data.error)
@@ -127,7 +127,7 @@ function SignUp() {
                       </a> */}
                       <a
                         href=""
-                        onClick={()=>{navigate('/login')}}
+                        onClick={()=>{navigate('/')}}
                         class="w-full text-center font-medium text-gray-500" 
                       >
                         alredy  have an account
