@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import moment from "moment";
 function Profile() {
   const token = localStorage.getItem("token");
-  console.log(token);
   const [scout, setscout] = useState("");
   const [scoutData, setScoutData] = useState("");
   useEffect(() => {
@@ -17,12 +16,10 @@ function Profile() {
         headers: { Authorization: `Bearer ${token} ` },
       })
       .then((res) => {
-        // toast.success("updation successful");
         setscout(res.data.scout);
         setScoutData(res.data.scoutData);
       })
       .catch((error) => {
-        console.log(error);
         toast.error(error.response.data.error);
       });
   };
@@ -37,14 +34,14 @@ function Profile() {
           />
         </div>
         <div>
-          {/* <button
+          <button
             onClick={() => {
-              Navigate("/editProfile");
+              Navigate("/register");
             }}
             className="mx-auto lg:mx-0 bg-blue-500/40 text-gray-800 font-bold box-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline  transition hover:scale-105 duration-300 ease-in-out"
           >
             EDIT profile
-          </button> */}
+          </button>
         </div>
         <div class="flex flex-col items-center -mt-32">
           <img

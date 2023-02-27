@@ -20,14 +20,14 @@ function Login() {
         .post("http://localhost:7007/api/scout/scoutLogin", { values })
         .then((res) => {
           let { token } = res.data;
+          const scout=res.data.scout.status
           localStorage.setItem("token", token);
           localStorage.setItem("fullname", res.data.scout.fullname);
           localStorage.setItem("scoutId", res.data.scout._id);
-
-          if (!localStorage.getItem("registered")) {
-            navigate("/register");
-          } else {
-            navigate("/home");
+          if(scout=="Pending"){
+              navigate("/register");
+          }else{
+              navigate("/home");
           }
         })
         .catch((error) => {

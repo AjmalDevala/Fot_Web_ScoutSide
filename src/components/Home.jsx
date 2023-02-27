@@ -1,10 +1,14 @@
 import React from "react";
+import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const navigate =useNavigate()
+  const navigate = useNavigate();
+  // toast.success('WelCome',{duration: 6000})
+
   return (
     <div>
+      <Toaster position="top-center"></Toaster>
       {/* <!-- component --> */}
       <div
         id="services"
@@ -13,45 +17,13 @@ function Home() {
         <div class="container xl:max-w-6xl mx-auto px-4">
           {/* <!-- Heading start --> */}
           <header class="text-center mx-auto mb-12 lg:px-20">
-            <h2 class="text-2xl leading-normal mb-2 font-bold text-black" >
+            <h2 class="text-2xl leading-normal mb-2 font-bold text-black">
               What We Do
             </h2>
-            {/* <svg
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              x="0px"
-              y="0px"
-              viewBox="0 0 100 60"
-              // style="margin: 0 auto;height: 35px;"
-              xml:space="preserve"
-            >
-              <circle
-                cx="50.1"
-                cy="30.4"
-                r="5"
-                class="stroke-primary"
-              style={{fill: "transparent;stroke-width: 2;stroke-miterlimit: 10"}}
-              ></circle>
-              <line
-                x1="55.1"
-                y1="30.4"
-                x2="100"
-                y2="30.4"
-                class="stroke-primary"
-                // style="stroke-width: 2;stroke-miterlimit: 10;"
-              ></line>
-              <line
-                x1="45.1"
-                y1="30.4"
-                x2="0"
-                y2="30.4"
-                class="stroke-primary"
-                // style="stroke-width: 2;stroke-miterlimit: 10;"
-              ></line>
-            </svg> */}
+
             <p class="text-gray-500 leading-relaxed font-light text-xl mx-auto pb-2">
-            Designed to make scouting easier   </p>
+              Designed to make scouting easier{" "}
+            </p>
           </header>
           {/* <!-- End heading --> */}
           {/* <!-- row --> */}
@@ -59,13 +31,19 @@ function Home() {
             <div
               class="flex-shrink px-4 max-w-full w-full sm:w-1/2 lg:w-1/3 lg:px-6 wow fadeInUp"
               data-wow-duration="1s"
-              style={{visibility: "visible; animation-duration: 1s; animation-name: fadeInUp;"}}
+              style={{
+                visibility:
+                  "visible; animation-duration: 1s; animation-name: fadeInUp;",
+              }}
+              onClick={() => {
+                navigate("/search");
+              }}
             >
               {/* <!-- service block --> */}
               <div class="py-8 px-12 mb-12 bg-gray-50 border-b  hover:bg-cyan-300  border-gray-100 transform transition duration-300 ease-in-out hover:-translate-y-4">
                 <div class="inline-block text-gray-900 mb-4">
                   {/* <!-- icon --> */}
-                  <svg 
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="2rem"
                     height="2rem"
@@ -77,7 +55,7 @@ function Home() {
                   </svg>
                 </div>
                 <h3 class="text-lg leading-normal mb-2 font-semibold text-black">
-                 Search Player
+                  Search Player
                 </h3>
                 <p class="text-gray-500">
                   This is a wider card with supporting text below as a natural
@@ -90,8 +68,13 @@ function Home() {
               class="flex-shrink px-4 max-w-full w-full sm:w-1/2 lg:w-1/3 lg:px-6 wow fadeInUp"
               data-wow-duration="1s"
               data-wow-delay=".1s"
-              style={{visibility: "visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;"}}
-                  onClick={()=>{navigate("/chat")}}
+              style={{
+                visibility:
+                  "visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;",
+              }}
+              onClick={() => {
+                navigate("/chat");
+              }}
             >
               {/* <!-- service block --> */}
               <div class="py-8 px-12 mb-12 bg-gray-50 border-b  hover:bg-cyan-300  border-gray-100 transform transition duration-300 ease-in-out hover:-translate-y-2">
@@ -123,8 +106,13 @@ function Home() {
               class="flex-shrink px-4 max-w-full w-full sm:w-1/2 lg:w-1/3 lg:px-6 wow fadeInUp"
               data-wow-duration="1s"
               data-wow-delay=".3s"
-              style={{visibility:" visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: fadeInUp;"}}
-                     onClick={()=>{navigate("/player")}}
+              style={{
+                visibility:
+                  " visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: fadeInUp;",
+              }}
+              onClick={() => {
+                navigate("/player");
+              }}
             >
               {/* <!-- service block --> */}
               <div class="py-8 px-12 mb-12 bg-gray-50 border-b  hover:bg-cyan-300  border-gray-100 transform transition duration-300 ease-in-out hover:-translate-y-2">
@@ -155,8 +143,13 @@ function Home() {
             <div
               class="flex-shrink px-4 max-w-full w-full  sm:w-1/2 lg:w-1/3 lg:px-6 wow fadeInUp"
               data-wow-duration="1s"
-              style={{visibility:" visible; animation-duration: 1s; animation-name: fadeInUp;"}}
-              onClick={()=>{navigate("/profile")}}
+              style={{
+                visibility:
+                  " visible; animation-duration: 1s; animation-name: fadeInUp;",
+              }}
+              onClick={() => {
+                navigate("/profile");
+              }}
             >
               {/* <!-- service block --> */}
               <div class="py-8 px-12 mb-12 bg-gray-50 border-b  hover:bg-cyan-300  border-gray-100 transform transition duration-300 ease-in-out hover:-translate-y-2">
@@ -184,13 +177,19 @@ function Home() {
               </div>
               {/* <!-- end service block --> */}
             </div>
+
             <div
               class="flex-shrink px-4 max-w-full w-full sm:w-1/2 lg:w-1/3 lg:px-6 wow fadeInUp"
               data-wow-duration="1s"
               data-wow-delay=".1s"
-              style={{visibility:" visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;"}}
-              onClick={()=>{navigate("/selectedplayer")}}
-            >
+              style={{
+                visibility:
+                  " visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;",
+              }}
+              onClick={() => {
+                navigate("/selectedplayer");
+              }}
+             >
               {/* <!-- service block --> */}
               <div class="py-8 px-12 mb-12 bg-gray-50 border-b  hover:bg-cyan-300  border-gray-100 transform transition duration-300 ease-in-out hover:-translate-y-2">
                 <div class="inline-block text-gray-900 mb-4">
@@ -207,7 +206,44 @@ function Home() {
                   </svg>
                 </div>
                 <h3 class="text-lg leading-normal mb-2 font-semibold text-black">
-                 Selected Players
+                  Selected Players
+                </h3>
+                <p class="text-gray-500">
+                  This is a wider card with supporting text below as a natural
+                  content.
+                </p>
+              </div>
+              {/* <!-- end service block --> */}
+            </div>
+            <div
+              class="flex-shrink px-4 max-w-full w-full sm:w-1/2 lg:w-1/3 lg:px-6 wow fadeInUp"
+              data-wow-duration="1s"
+              data-wow-delay=".1s"
+              style={{
+                visibility:
+                  " visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;",
+              }}
+              onClick={() => {
+                navigate("/selectedplayer");
+              }}
+             >
+              {/* <!-- service block --> */}
+              <div class="py-8 px-12 mb-12 bg-gray-50 border-b  hover:bg-cyan-300  border-gray-100 transform transition duration-300 ease-in-out hover:-translate-y-2">
+                <div class="inline-block text-gray-900 mb-4">
+                  {/* <!-- icon --> */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="2rem"
+                    height="2rem"
+                    fill="currentColor"
+                    class="bi bi-wallet2"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z"></path>
+                  </svg>
+                </div>
+                <h3 class="text-lg leading-normal mb-2 font-semibold text-black">
+                  Request players
                 </h3>
                 <p class="text-gray-500">
                   This is a wider card with supporting text below as a natural
@@ -220,9 +256,11 @@ function Home() {
               class="flex-shrink px-4 max-w-full w-full sm:w-1/2 lg:w-1/3 lg:px-6 wow fadeInUp"
               data-wow-duration="1s"
               data-wow-delay=".3s"
-              style={{visibility:" visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: fadeInUp;"}}
+              style={{
+                visibility:
+                  " visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: fadeInUp;",
+              }}
             >
-
               {/* <!-- service block --> */}
               {/*  */}
               {/* <!-- end service block --> */}
@@ -235,4 +273,4 @@ function Home() {
   );
 }
 
-export default Home
+export default Home;

@@ -2,14 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import Navbar from "./layout/Navbar";
 
-function Player() {
+function Search() {
   const [search, setSearch] = useState("");
   const searchData = (player) => {
     return search === ""
       ? player
       : player.userId.fullname.toLowerCase().includes(search) ||
-      player.position.toLowerCase().includes(search)          
+          player.position.toLowerCase().includes(search);
   };
 
   const [player, setPlayer] = useState([]);
@@ -20,22 +21,20 @@ function Player() {
     });
   }, []);
 
-const Connect = (id)=>{
-  const scoutId = localStorage.getItem("scoutId");
-   axios.post(`http://localhost:7007/api/scout/connectPlayer?scoutId=${scoutId}&userId=${id}`)
-   .then((response)=>{
-     toast.success(response.data.msg)
-   }).catch((error) => {
-    if (error.response) {
-      toast.error(error.response.data.error);
-    } else {
-      toast.error(error.message);
-    }
-  });
-}
+  const Connect = (id) => {
+    const scoutId = localStorage.getItem("scoutId");
+    axios
+      .post(
+        `http://localhost:7007/api/scout/connectPlayer?scoutId=${scoutId}&userId=${id}`
+      )
+      .then((res) => {
+        toast(res.data);
+      });
+  };
 
   return (
     <div>
+      <Navbar />
       <Toaster position="top-center"></Toaster>
       <link
         rel="stylesheet"
@@ -46,22 +45,6 @@ const Connect = (id)=>{
         <div className="flex flex-col">
           <div className="flex flex-col ">
             <div className="container max-w-7xl px-4">
-              <div className="flex flex-wrap justify-center text-center ">
-                <div className="w-full lg:w-6/12 px-4">
-                  <h1 className="text-gray-900 text-4xl font-bold mb-7">
-                    Meet the players
-                  </h1>
-                  {/* <!-- Description --> */}
-                  <p className="text-gray-700 text-lg font-light">
-                    A player scout typically attends as many football matches as
-                    possible to evaluate targets first hand. Scouts who wish to
-                    identify promising young players typically attend
-                    lower-league club games,.
-                  </p>
-                  <p className="text-center text-bold">Connect and Message!</p>
-                </div>
-              </div>
-
               <div className="flex justify-center">
                 <form className="w-full max-w-md ">
                   <div className="flex items-center border-b-2 border-teal-500 py-2">
@@ -90,16 +73,16 @@ const Connect = (id)=>{
                   <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {player.filter(searchData).map((player) => (
                       <div key={player?.id} className="group relative">
-                        <Link  to={'/singlePage'} state={player?.userId._id}>
-                        <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                          <img
-                            src={player?.profileUrl}
-                            alt="add"
-                            className="h-full w-full object-cover object-center lg:h-full lg:w-full sm:h-full sm:w-full md:w-full md:h-full"
-                          />
-                        </div>
+                        <Link to={"/singlePage"} state={player?.userId._id}>
+                          <div className="min-h-48 aspect-w-2 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                            <img
+                              src={player?.profileUrl}
+                              alt="add"
+                              className="h-full w-48  object-cover "
+                            />
+                          </div>
                         </Link>
-                        <p className="mt-1 text-xl text-blue-600 flex justify-center">
+                        <p className="mt-1 text-xl text-cyan-300 flex justify-center">
                           {player?.position}
                         </p>
                         <div className="mt-4 flex justify-between">
@@ -107,7 +90,7 @@ const Connect = (id)=>{
                             <h3 className="text-lg text-bold text-">
                               {player?.userId.fullname}
                             </h3>
-                            <h4 className="text-base text-neutral-900">
+                            <h4 className="text-sm text-neutral-900">
                               Age:
                               {player?.age}
                             </h4>
@@ -120,7 +103,10 @@ const Connect = (id)=>{
                           {player?.currentTeam}
                         </p>
                         <div className="flex justify-center">
-                          <button  onClick={()=>Connect(player.userId._id)} className="mx-auto lg:mx-0 hover:none bg-emerald-200 text-gray-800 font-bold box-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                          <button
+                            onClick={() => Connect(player._id)}
+                            className="mx-auto lg:mx-0 hover:none bg-emerald-200 text-gray-800 font-bold box-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+                          >
                             Connect!
                           </button>
                         </div>
@@ -137,4 +123,4 @@ const Connect = (id)=>{
   );
 }
 
-export default Player;
+export default Search;

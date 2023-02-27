@@ -65,7 +65,6 @@ function RegisterScout() {
       .then(async (res) => {
         const profileUrl = res.data.secure_url;
         const token = localStorage.getItem("token");
-        const scoutId = localStorage.getItem("scoutId");
         await axios
           .post(
             `http://localhost:7007/api/scout/scoutRegister`,
@@ -85,15 +84,14 @@ function RegisterScout() {
             { headers: { Authorization: `Bearer ${token}` } }
           )
           .then((response) => {
-            console.log("image added");
-            localStorage.setItem("registered", true);
-            if (response) {
+            if (response.data.scout.status=="Pending") {
+              navigate("/waiting");
+            }else{
               toast.success("Profile Added Successfully");
-              navigate("/home");
+              navigate("/home")
             }
           })
           .catch((error) => {
-            console.log(error);
             if (error.response) {
               toast.error(error.response.data.error);
             } else {
@@ -139,7 +137,6 @@ function RegisterScout() {
                       name="file-upload"
                       type="file"
                       className="sr-only"
-                      required
                     />
                   </label>
                 </div>
@@ -147,24 +144,49 @@ function RegisterScout() {
             </div>
           </div>
 
-          <div>
-            <label
-              for="first_name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Date of birth
-            </label>
-            <input
-              value={dateOfBirth}
-              onChange={(e) => {
-                setDataofbirth(e.target.value);
-              }}
-              type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required
-              placeholder="DD/MM/YYYY"
-            />
-          </div>
+  
+          {dateOfBirth.length >1 ? (
+                
+                <div>
+                  <label
+                    className="text-white dark:text-gray-200"
+                    htmlFor="passwordConfirmation"
+                  >
+                    Date of birth
+                  </label>
+                  <input
+                    value={dateOfBirth}
+                    onChange={(e) => {
+                      setDataofbirth(e.target.value);
+                    }}
+                    id=""
+                    type="text"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                  />
+                </div>
+              ) : (
+                <div>
+                  <label
+                    className="text-white dark:text-gray-200"
+                    htmlFor="passwordConfirmation"
+                  >
+                    Date of birth
+                  </label>
+                  <input
+                    value={dateOfBirth}
+                    onChange={(e) => {
+                      setDataofbirth(e.target.value);
+                    }}
+                    id=""
+                    type="date"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                  />
+                </div>
+              )}
+          
+   
+
+
           <div>
             <label
               for="age"
