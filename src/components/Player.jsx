@@ -1,38 +1,57 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Player() {
+  const scoutId = localStorage.getItem("scoutId");
   const [search, setSearch] = useState("");
+  const [connectedPlayers, setConnectedPlayers] = useState([]);
+  const [player, setPlayer] = useState([]);
+  const [change, setChange] = useState(false);
+  const [tempPlayer, setTempPlayer] = useState([]);
+  const navigate = useNavigate();
   const searchData = (player) => {
     return search === ""
       ? player
       : player.userId.fullname.toLowerCase().includes(search) ||
-      player.position.toLowerCase().includes(search)          
+          player.position.toLowerCase().includes(search);
   };
 
-  const [player, setPlayer] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:7007/api/admin/allplayer").then((response) => {
-      console.log(response.data, "0987654dyuio");
       setPlayer(response.data.player);
+      connected();
     });
-  }, []);
+  }, [change]);
 
-const Connect = (id)=>{
-  const scoutId = localStorage.getItem("scoutId");
-   axios.post(`http://localhost:7007/api/scout/connectPlayer?scoutId=${scoutId}&userId=${id}`)
-   .then((response)=>{
-     toast.success(response.data.msg)
-   }).catch((error) => {
-    if (error.response) {
-      toast.error(error.response.data.error);
-    } else {
-      toast.error(error.message);
-    }
-  });
-}
+  const connected = () => {
+    axios
+      .get(
+        `http://localhost:7007/api/admin/connectedPlayers?scoutId=${scoutId}`
+      )
+      .then((response) => {
+        setConnectedPlayers(response.data.connectPlayer);
+      });
+  };
+
+  const Connect = (id) => {
+    axios
+      .post(
+        `http://localhost:7007/api/scout/connectPlayer?scoutId=${scoutId}&userId=${id}`
+      )
+      .then((response) => {
+        toast.success(response.data.msg);
+        change === true ? setChange(false) : setChange(true);
+      })
+      .catch((error) => {
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error(error.message);
+        }
+      });
+  };
 
   return (
     <div>
@@ -90,14 +109,14 @@ const Connect = (id)=>{
                   <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {player.filter(searchData).map((player) => (
                       <div key={player?.id} className="group relative">
-                        <Link  to={'/singlePage'} state={player?.userId._id}>
-                        <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                          <img
-                            src={player?.profileUrl}
-                            alt="add"
-                            className="h-full w-full object-cover object-center lg:h-full lg:w-full sm:h-full sm:w-full md:w-full md:h-full"
-                          />
-                        </div>
+                        <Link to={"/singlePage"} state={player?.userId._id}>
+                          <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                            <img
+                              src={player?.profileUrl}
+                              alt="add"
+                              className="h-full w-full object-cover object-center lg:h-full lg:w-full sm:h-full sm:w-full md:w-full md:h-full"
+                            />
+                          </div>
                         </Link>
                         <p className="mt-1 text-xl text-blue-600 flex justify-center">
                           {player?.position}
@@ -116,13 +135,22 @@ const Connect = (id)=>{
                             {player?.nationality}
                           </p>
                         </div>
-                        <p className="text-sm flex justify-center  font-bold text-blue-600 ">
-                          {player?.currentTeam}
-                        </p>
                         <div className="flex justify-center">
-                          <button  onClick={()=>Connect(player.userId._id)} className="mx-auto lg:mx-0 hover:none bg-emerald-200 text-gray-800 font-bold box-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                            Connect!
-                          </button>
+                          {connectedPlayers.includes(player.userId._id) ? (
+                            <button
+                              onClick={() => navigate("/chat")}
+                              className="mx-auto lg:mx-0 hover:none bg-emerald-200 text-gray-800 font-bold box-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+                            >
+                              Message
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => Connect(player.userId._id)}
+                              className="mx-auto lg:mx-0 hover:none bg-emerald-200 text-gray-800 font-bold box-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+                            >
+                              Connect!
+                            </button>
+                          )}
                         </div>
                       </div>
                     ))}

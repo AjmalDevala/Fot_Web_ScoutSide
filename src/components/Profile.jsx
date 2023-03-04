@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
-import { Navigate, useNavigate } from "react-router-dom";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 function Profile() {
+   const navigate = useNavigate()
   const token = localStorage.getItem("token");
   const [scout, setscout] = useState("");
   const [scoutData, setScoutData] = useState("");
@@ -36,7 +37,7 @@ function Profile() {
         <div>
           <button
             onClick={() => {
-              Navigate("/register");
+              navigate("/register");
             }}
             className="mx-auto lg:mx-0 bg-blue-500/40 text-gray-800 font-bold box-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline  transition hover:scale-105 duration-300 ease-in-out"
           >
@@ -51,7 +52,7 @@ function Profile() {
           />
           <div class="flex items-center space-x-2 mt-2">
             <p class="text-2xl">{scout?.fullname}</p>
-            <span class="bg-blue-500 rounded-full p-1" title="Verified">
+            {/* <span class="bg-blue-500 rounded-full p-1" title="Verified">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="text-gray-100 h-2.5 w-2.5"
@@ -66,7 +67,7 @@ function Profile() {
                   d="M5 13l4 4L19 7"
                 ></path>
               </svg>
-            </span>
+            </span> */}
           </div>
 
           <p class="text-gray-700">Scout</p>

@@ -26,11 +26,11 @@ function SinglePage() {
             <img
               src={player?.profileUrl}
               alt="som"
-              className="object-fill mx-auto absolute -top-20 w-52 h-44 shadow-md border-4 border-white transition duration-200 transform hover:scale-110"
+              className="object-fill mx-auto  -top-20 w-52 h-44 shadow-md border-4 border-white transition duration-200 transform hover:scale-110"
             />
           </div>
 
-          <div className="mt-28">
+          <div className="mt-7">
             <h1 className="font-bold text-center text-3xl text-gray-900">
               {player.userId?.fullname}
             </h1>

@@ -21,7 +21,6 @@ const WaitingPage = () => {
             toast.dismiss();
           }, 30000);
         }else{
-            console.log("kjfsdlhf");
             navigate("/home");
         }
       })
