@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import Instance from "../config/Instance";
 
 function AllPlayers() {
   const [search, setSearch] = useState("");
@@ -14,17 +15,15 @@ function AllPlayers() {
 
   const [player, setPlayer] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:7007/api/admin/allplayer").then((response) => {
-      console.log(response.data, "0987654dyuio");
+    Instance.get("/admin/allplayer").then((response) => {
       setPlayer(response.data.player);
     });
   }, []);
 
   const Connect = (id) => {
     const scoutId = localStorage.getItem("scoutId");
-    axios
-      .post(
-        `http://localhost:7007/api/scout/connectPlayer?scoutId=${scoutId}&userId=${id}`
+    Instance
+      .post(`scout/connectPlayer?scoutId=${scoutId}&userId=${id}`
       )
       .then((response) => {
         toast.success(response.data.msg);

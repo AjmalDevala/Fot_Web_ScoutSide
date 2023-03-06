@@ -79,12 +79,14 @@ function Chat() {
     socket.current.emit("send-msg", {
       to: currentChat._id,
       message: inputMessage,
+      type: "text",
     });
 
     let data = {
       to: currentChat._id,
       from: scoutId,
       message: inputMessage,
+      type: "text",
     };
 
     await axios.post("http://localhost:7007/api/admin/sendMessage", data, {
@@ -96,8 +98,8 @@ function Chat() {
 
   useEffect(() => {
     if (socket.current) {
-      socket.current.on("msg-receive", (msg) => {
-        setArrivalMessage({ myself: false, message: msg });
+      socket.current.on("msg-receive", (data) => {
+        setArrivalMessage({ myself: false, message:  data.message, type:data.type});
       });
     }
   }, [arrivalMessage]);
@@ -187,18 +189,46 @@ function Chat() {
                         >
                           <div className="flex items-center justify-start flex-row-reverse">
                             <div className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
-                              <div>{msg.message}</div>
+                              {/* <div>{msg.message}</div> */}
+                              {msg?.type === "video" ? (
+                                <video src={msg.message} controls></video>
+                                
+                              ):
+                              msg.type === "image" ? (
+                                <img src={msg.message}></img>
+                              ):
+                              (
+                                <span>{msg.message ? msg.message : ""}</span>
+                              )}
+                              {/* <span className="date">
+                                {format(msg.createdAt)}
+                              </span> */}
+                              {/* <div>{msg.message}</div> */}
                             </div>
                           </div>
                         </div>
                       ) : (
                         <div
-                          key={msg.message}
+                          key={msg._id}
                           className="col-start-1 col-end-8 p-3 rounded-lg"
                         >
                           <div className="flex flex-row items-center">
                             <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
-                              <div>{msg.message}</div>
+                              {/* <div>{msg.message}</div> */}
+                              {msg?.type === "video" ? (
+                                <video src={msg.message} controls></video>
+                                
+                              ):
+                              msg.type === "image" ? (
+                                <img src={msg.message}></img>
+                              ):
+                              (
+                                <span>{msg.message ? msg.message : ""}</span>
+                              )}
+                              {/* <span className="date">
+                                {format(msg.createdAt)}
+                              </span> */}
+                              {/* <div>{msg.message}</div> */}
                             </div>
                           </div>
                         </div>
