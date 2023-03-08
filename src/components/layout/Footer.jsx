@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Footer() {
+const Footer=()=> {
   return (
     <div>
     <footer aria-label="Site Footer" class="bg-gray-100">

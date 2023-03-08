@@ -95,7 +95,6 @@ function Search() {
 
   return (
     <div>
-      <Navbar />
       <Toaster position="top-center"></Toaster>
       <link
         rel="stylesheet"

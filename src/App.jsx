@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AllPlayers from "./components/AllPlayers";
 import Notification from "./components/Notification";
-import Search from "./components/Search";
 import SinglePage from "./components/SinglePage";
 import ErrorPage from "./error/errorPage";
 import ChatPage from "./page/ChatPage";
@@ -12,8 +11,9 @@ import ProfilePage from "./page/ProfilePage";
 import RegisterPage from "./page/RegisterPage";
 import SelectedPlayerPage from "./page/SelectedPlayerPage";
 import SignupPage from "./page/SignupPage";
-import WaitingPage from "./page/waitingPage";
+import WaitingPage from "./page/WaitingPage";
 import ProtectedRoutes from '../ProtectedRoutes'
+import SearchPage from "./page/searchPage";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
         <Route path="/player" element={<ProtectedRoutes><PlayerPage /></ProtectedRoutes>} />
         <Route path="/selectedplayer" element={<ProtectedRoutes><SelectedPlayerPage /></ProtectedRoutes>} />
         <Route path="/singlePage" element={<ProtectedRoutes><SinglePage /></ProtectedRoutes>} />
-        <Route path="/search" element={<ProtectedRoutes><Search /></ProtectedRoutes>} />
+        <Route path="/search" element={<ProtectedRoutes><SearchPage /></ProtectedRoutes>} />
         <Route path="/all" element={<ProtectedRoutes><AllPlayers /></ProtectedRoutes>} />
         <Route path="/notification" element={<Notification />} />
 

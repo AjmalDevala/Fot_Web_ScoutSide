@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Navbar";
 import Search from "../components/Search";
 
-function searchPage() {
+function SearchPage() {
   const scoutId = localStorage.getItem("scoutId");
 
   useEffect
@@ -10,8 +11,9 @@ function searchPage() {
     <div>
       <Navbar />
       <Search />
+      <Footer/>
     </div>
   );
 }
 
-export default searchPage;
+export default SearchPage;
