@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import Instance from "../config/Instance";
 const token = localStorage.getItem("token");
 
 function RegisterScout() {
@@ -23,8 +24,8 @@ function RegisterScout() {
   }, []);
 
   const showProfile = async () => {
-    await axios
-      .get("http://localhost:7007/api/scout/showProfile", {
+    await Instance
+      .get("/scout/showProfile", {
         headers: { Authorization: `Bearer ${token} ` },
       })
       .then((res) => {
@@ -65,9 +66,9 @@ function RegisterScout() {
       .then(async (res) => {
         const profileUrl = res.data.secure_url;
         const token = localStorage.getItem("token");
-        await axios
+        await Instance
           .post(
-            `http://localhost:7007/api/scout/scoutRegister`,
+            `/scout/scoutRegister`,
             {
               profileUrl,
               dateOfBirth,
@@ -85,7 +86,7 @@ function RegisterScout() {
           )
           .then((response) => {
             if (response.data.scout.status=="Pending") {
-              navigate("/waiting");
+              navigate("/waiting",{replace:true});
             }else{
               toast.success("Profile Added Successfully");
               navigate("/home")

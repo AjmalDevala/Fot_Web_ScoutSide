@@ -10,9 +10,10 @@ import LoginPage from "./page/LoginPage";
 import PlayerPage from "./page/PlayerPage";
 import ProfilePage from "./page/ProfilePage";
 import RegisterPage from "./page/RegisterPage";
-import SelectedPlayerPage from "./page/selectedPlayerPage";
+import SelectedPlayerPage from "./page/SelectedPlayerPage";
 import SignupPage from "./page/SignupPage";
 import WaitingPage from "./page/waitingPage";
+import ProtectedRoutes from '../ProtectedRoutes'
 
 function App() {
   return (
@@ -22,16 +23,16 @@ function App() {
 
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/waiting" element={<WaitingPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/player" element={<PlayerPage />} />
-        <Route path="/selectedplayer" element={<SelectedPlayerPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/singlePage" element={<SinglePage />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/all" element={<AllPlayers />} />
+        <Route path="/waiting" element={<WaitingPage />} />
+        <Route path="/home" element={<ProtectedRoutes><HomePage /></ProtectedRoutes>} />
+        <Route path="/chat" element={<ProtectedRoutes><ChatPage /></ProtectedRoutes>} />
+        <Route path="/profile" element={<ProtectedRoutes><ProfilePage /></ProtectedRoutes>} />
+        <Route path="/player" element={<ProtectedRoutes><PlayerPage /></ProtectedRoutes>} />
+        <Route path="/selectedplayer" element={<ProtectedRoutes><SelectedPlayerPage /></ProtectedRoutes>} />
+        <Route path="/singlePage" element={<ProtectedRoutes><SinglePage /></ProtectedRoutes>} />
+        <Route path="/search" element={<ProtectedRoutes><Search /></ProtectedRoutes>} />
+        <Route path="/all" element={<ProtectedRoutes><AllPlayers /></ProtectedRoutes>} />
         <Route path="/notification" element={<Notification />} />
 
         {/* erro Page */}

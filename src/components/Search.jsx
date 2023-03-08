@@ -1,8 +1,11 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { Link, useNavigate,  } from "react-router-dom";
+import Instance from "../config/Instance";
 import Navbar from "./layout/Navbar";
+import ReactPaginate from "react-paginate";
+import "../pagenation.css"
+
 
 function Search() {
   const [search, setSearch] = useState("");
@@ -11,7 +14,22 @@ function Search() {
   const [tempPlayer, setTempPlayer] = useState([]);
   const [change, setChange] = useState(false);
   const scoutId = localStorage.getItem("scoutId");
+  const token = localStorage.getItem("token");
   const navigate =useNavigate()
+
+ //  Pagination......................
+ const [currentPage, setCurrentPage] = useState(0);
+ const [itemsPerPage, setItemsPerPage] = useState(8);
+ const dataToRender = tempPlayer.slice(
+   currentPage * itemsPerPage,
+   (currentPage + 1) * itemsPerPage
+ );
+
+ const handlePageChange = ({ selected }) => {
+  setCurrentPage(selected);
+};
+
+
   const searchData = (player) => {
     return search === ""
       ? player
@@ -37,7 +55,10 @@ function Search() {
     setTempPlayer(player);
   };
   useEffect(() => {
-    axios.get("http://localhost:7007/api/admin/allplayer").then((response) => {
+    const token = localStorage.getItem("token");
+    Instance.get("/admin/allplayer", {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((response) => {
       setPlayer(response.data.player);
       setTempPlayer(response.data.player);
       connected();
@@ -45,9 +66,11 @@ function Search() {
   }, [change]);
 
   const connected = () => {
-    axios
+    Instance
       .get(
-        `http://localhost:7007/api/admin/connectedPlayers?scoutId=${scoutId}`
+        `/admin/connectedPlayers`,{
+          headers:{Authorization: `Bearer ${token}`}
+        }
       )
       .then((response) => {
         console.log(response.data.connectPlayer);
@@ -57,11 +80,11 @@ function Search() {
 
   const Connect = (id) => {
     change === true ? setChange(false) : setChange(true);
-   
-    axios
+    Instance
       .post(
-        `http://localhost:7007/api/scout/connectPlayer?scoutId=${scoutId}&userId=${id}`
-      )
+        `/scout/connectPlayer?userId=${id}`,{},{
+          headers:{Authorization :  `Bearer ${token}`}
+        })
       .then((response) => {
         toast.success(response.data.msg);
       })
@@ -154,7 +177,7 @@ function Search() {
               <div className="bg-white">
                 <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
                   <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                    {tempPlayer.filter(searchData).map((player) => (
+                    {dataToRender.filter(searchData).map((player) => (
                       <div key={player?.id} className="group relative ">
                         <Link to={"/singlePage"} state={player?.userId._id}>
                           <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
@@ -211,6 +234,20 @@ function Search() {
           </div>
         </div>
       </div>
+      <ReactPaginate
+        pageCount={Math.ceil(tempPlayer.length / itemsPerPage)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageChange}
+        containerClassName="pagination"
+        activeClassName="active"
+        previousLabel="Previous"
+        nextLabel="Next"
+        pageLinkClassName="page-link"
+        previousLinkClassName="page-link"
+        nextLinkClassName="page-link"
+        disabledClassName="disabled"
+      />
     </div>
   );
 }

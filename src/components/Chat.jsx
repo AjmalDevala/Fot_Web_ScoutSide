@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import InputEmoji from "react-input-emoji";
+import Instance from "../config/Instance";
 
 function Chat() {
 
@@ -23,8 +23,8 @@ function Chat() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const connectedPlayer = async () => {
-      const { data } = await axios.post(
-        "http://localhost:7007/api/admin/connectedUsers",
+      const { data } = await Instance.post(
+        "/admin/connectedUsers",
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -42,8 +42,11 @@ function Chat() {
   useEffect(() => {
     const getMessages = async (userId) => {
       const  scoutId  = localStorage.getItem("scoutId")
-      const { data } = await axios.get(
-        `http://localhost:7007/api/admin/getMessage/${scoutId}/${userId}`,);
+      const token = localStorage.getItem("token");
+      const { data } = await Instance.get(
+        `/admin/getMessage/${scoutId}/${userId}`,{
+          headers:{Authorization:`Bearer ${token}`}
+        });
       setMessages(data);
     };
     getMessages(currentChat._id);
@@ -51,9 +54,10 @@ function Chat() {
 
 
   const UnreadMsg =async()=>{
-    const { data } = await axios.get(
-      `http://localhost:7007/api/admin/scoutUnread/${scoutId}`
-    )
+    const { data } = await Instance.get(
+      `/admin/scoutUnread`,{
+        headers:{Authorization:`Bearer ${token}`}
+      })
     setUnread(data.count)
   }
 
@@ -89,7 +93,7 @@ function Chat() {
       type: "text",
     };
 
-    await axios.post("http://localhost:7007/api/admin/sendMessage", data, {
+    await Instance.post("/admin/sendMessage", data, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setMessages(message.concat(messages));

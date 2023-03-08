@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-input-emoji": "^4.3.0",
+    "react-paginate": "^8.1.4",
     "react-router-dom": "^6.8.1",
     "socket.io-client": "^4.6.1"
   },

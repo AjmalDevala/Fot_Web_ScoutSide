@@ -1,9 +1,9 @@
 import React from "react";
-import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import  {siginupValidation} from "../../helpers/validate";
+import Instance from "../../config/Instance";
 function SignUp() {
   const navigate = useNavigate();
   const Formik = useFormik({
@@ -17,7 +17,7 @@ function SignUp() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      await axios.post('http://localhost:7007/api/scout/scoutSignup',{values}).then((res)=>{
+      await Instance.post('/scout/scoutSignup',{values}).then((res)=>{
         navigate('/')
       }).catch((error)=>{
         console.log(error)

@@ -1,8 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import Instance from "../config/Instance";
 function Profile() {
    const navigate = useNavigate()
   const token = localStorage.getItem("token");
@@ -12,8 +12,8 @@ function Profile() {
     showProfile();
   }, []);
   const showProfile = async () => {
-    await axios
-      .get("http://localhost:7007/api/scout/showProfile", {
+    await Instance
+      .get("/scout/showProfile", {
         headers: { Authorization: `Bearer ${token} ` },
       })
       .then((res) => {

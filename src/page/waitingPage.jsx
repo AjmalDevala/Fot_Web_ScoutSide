@@ -1,7 +1,8 @@
-import axios from "axios";
+
 import React, { useEffect } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Instance from "../config/Instance";
 
 const WaitingPage = () => {
   const navigate = useNavigate();
@@ -10,8 +11,8 @@ const WaitingPage = () => {
     showProfile();
   }, []);
   const showProfile = async () => {
-    await axios
-      .get("http://localhost:7007/api/scout/showProfile", {
+    await Instance
+      .get("/scout/showProfile", {
         headers: { Authorization: `Bearer ${token} ` },
       })
       .then((response) => {

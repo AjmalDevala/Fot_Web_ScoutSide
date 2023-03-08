@@ -1,14 +1,16 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Instance from "../config/Instance";
 
 function Notification() {
+  const token = localStorage.getItem("token");
   const [users, setUsers] = useState([]);
   console.log(users);
   useEffect(() => {
-    axios
-      .get("http://localhost:7007/api/admin/connectedPlayers")
-      .then((response) => {
+    Instance
+      .get("/admin/connectedPlayers",{
+          headers: { Authorization: `Bearer ${token}` },
+        }).then((response) => {
         const allUsers = response.data.connectPlayer;
         setUsers(allUsers);
       })

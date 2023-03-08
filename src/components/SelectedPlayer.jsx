@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import Instance from "../config/Instance";
 
 function SelectedPlayer() {
   const [search, setSearch] = useState("");
@@ -17,8 +17,8 @@ function SelectedPlayer() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const connected = async () => {
-      const { data } = await axios.post(
-        "http://localhost:7007/api/admin/connectedUsers",
+      const { data } = await Instance.post(
+        "/admin/connectedUsers",
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -33,10 +33,8 @@ function SelectedPlayer() {
 
   const remove = (userId) => {
     const token = localStorage.getItem("token");
-    axios
-      .post(
-        `http://localhost:7007/api/admin/removeUser/${userId}`,
-        {},
+    Instance
+      .post(`/admin/removeUser/${userId}`,{},
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -46,6 +44,7 @@ function SelectedPlayer() {
         toast.success(response.data.msg);
       });
   };
+
 
   return (
     <div>

@@ -1,17 +1,19 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Instance from "../config/Instance";
 import Navbar from "./layout/Navbar";
 
 function SinglePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const playerId = location?.state;
-
+  const token = localStorage.getItem("token")
   const [player, setPlayer] = useState([]);
   useEffect(() => {
-    axios
-      .get(`http://localhost:7007/api/scout/singlePlayer/${playerId}`)
+    Instance
+      .get(`/scout/singlePlayer/${playerId}`,{
+        headers:{Authorization :`Bearer ${token}`}
+      })
       .then((response) => {
         setPlayer(response.data.player);
       });

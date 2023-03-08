@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { loginValidation } from "../../helpers/validate";
-import axios from "axios";
+import Instance from "../../config/Instance";
 
 function Login() {
   const navigate = useNavigate();
@@ -16,8 +16,7 @@ function Login() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      await axios
-        .post("http://localhost:7007/api/scout/scoutLogin", { values })
+      await Instance.post("/scout/scoutLogin", { values })
         .then((res) => {
           let { token } = res.data;
           const scout=res.data.scout.status
@@ -27,7 +26,7 @@ function Login() {
           if(scout=="Pending"){
               navigate("/register");
           }else{
-              navigate("/home");
+              navigate("/home",{replace:true});
           }
         })
         .catch((error) => {
