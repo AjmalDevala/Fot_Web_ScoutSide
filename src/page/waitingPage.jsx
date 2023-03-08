@@ -4,7 +4,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Instance from "../config/Instance";
 
-const WaitingPage = () => {
+const waitingPage = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -52,4 +52,4 @@ const WaitingPage = () => {
   );
 };
 
-export default WaitingPage;
+export default waitingPage;

@@ -11,7 +11,7 @@ import ProfilePage from "./page/ProfilePage";
 import RegisterPage from "./page/RegisterPage";
 import SelectedPlayerPage from "./page/SelectedPlayerPage";
 import SignupPage from "./page/SignupPage";
-import WaitingPage from "./page/WaitingPage";
+import WaitingPage from "./page/waitingPage";
 import ProtectedRoutes from '../ProtectedRoutes'
 import SearchPage from "./page/searchPage";
 

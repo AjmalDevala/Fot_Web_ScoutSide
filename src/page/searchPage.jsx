@@ -3,7 +3,7 @@ import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Navbar";
 import Search from "../components/Search";
 
-function SearchPage() {
+function searchPage() {
   const scoutId = localStorage.getItem("scoutId");
 
   useEffect
@@ -16,4 +16,4 @@ function SearchPage() {
   );
 }
 
-export default SearchPage;
+export default searchPage;
