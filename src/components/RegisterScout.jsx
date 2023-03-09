@@ -138,6 +138,7 @@ function RegisterScout() {
                       name="file-upload"
                       type="file"
                       className="sr-only"
+                      accept="image/x-png,image/gif,image/jpeg"
                     />
                   </label>
                 </div>
