@@ -39,7 +39,7 @@ function SignUp() {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
-                  xmlns="/src/assets/images/goly.png"
+                  xmlns="/images/goly.png"
                 >
                   <path
                     stroke-linecap="round"

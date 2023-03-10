@@ -7,16 +7,16 @@ function SinglePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const playerId = location?.state;
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   const [player, setPlayer] = useState([]);
+  const [gallery, setGallery] = useState([]);
   useEffect(() => {
-    Instance
-      .get(`/scout/singlePlayer/${playerId}`,{
-        headers:{Authorization :`Bearer ${token}`}
-      })
-      .then((response) => {
-        setPlayer(response.data.player);
-      });
+    Instance.get(`/scout/singlePlayer/${playerId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((response) => {
+      setPlayer(response.data.player);
+      setGallery(response.data.gallery);
+    });
   }, []);
 
   return (
@@ -64,7 +64,9 @@ function SinglePage() {
                     className="rounded-full h-6 shadow-md inline-block mr-2"
                   />
                   Player Position :
-                  <span className="text-gray-500 font-medium  ml-2">{player?.position}</span>
+                  <span className="text-gray-500 font-medium  ml-2">
+                    {player?.position}
+                  </span>
                 </a>
 
                 <a
@@ -77,7 +79,9 @@ function SinglePage() {
                     className="rounded-full h-6 shadow-md inline-block mr-2"
                   />
                   player currentTeam :
-                  <span className="text-gray-500 text-base font-bold  ml-2">{player?.currentTeam}</span>
+                  <span className="text-gray-500 text-base font-bold  ml-2">
+                    {player?.currentTeam}
+                  </span>
                 </a>
 
                 <a
@@ -100,8 +104,13 @@ function SinglePage() {
                     alt=""
                     className="rounded-full  h-6 shadow-md inline-block mr-2"
                   />
-                  Player height :<span className="font-bold">{player?.height} cm</span>
-                 <a  className="ml-4" > Player Foot :<span className="font-bold ml-4 " >{player?.foot} </span></a>
+                  Player height :
+                  <span className="font-bold">{player?.height} cm</span>
+                  <a className="ml-4">
+                    {" "}
+                    Player Foot :
+                    <span className="font-bold ml-4 ">{player?.foot} </span>
+                  </a>
                 </a>
 
                 <a
@@ -114,7 +123,9 @@ function SinglePage() {
                     className="rounded-full h-6 shadow-md inline-block mr-2"
                   />
                   player country :-
-                  <span className="text-gray-500 text-xs">{player?.nationality}</span>
+                  <span className="text-gray-500 text-xs">
+                    {player?.nationality}
+                  </span>
                 </a>
 
                 <a
@@ -127,7 +138,9 @@ function SinglePage() {
                     className="rounded-full h-6 shadow-md inline-block mr-2"
                   />
                   player past Team :-
-                  <span className="text-gray-500 text-xs">{player?.previousTeam}</span>
+                  <span className="text-gray-500 text-xs">
+                    {player?.previousTeam}
+                  </span>
                 </a>
                 <a
                   href="#"
@@ -139,7 +152,9 @@ function SinglePage() {
                     className="rounded-full h-6 shadow-md inline-block mr-2"
                   />
                   player Awards :-
-                  <span className="text-gray-500 font-bold text-base">{player?.awards}</span>
+                  <span className="text-gray-500 font-bold text-base">
+                    {player?.awards}
+                  </span>
                 </a>
                 <a
                   href="#"
@@ -151,7 +166,9 @@ function SinglePage() {
                     className="rounded-full h-6 shadow-md inline-block mr-2"
                   />
                   player Language :-
-                  <span className="text-gray-500 text-xs">{player?.language}</span>
+                  <span className="text-gray-500 text-xs">
+                    {player?.language}
+                  </span>
                 </a>
                 <a
                   href="#"
@@ -163,10 +180,41 @@ function SinglePage() {
                     className="rounded-full h-6 shadow-md inline-block mr-2"
                   />
                   player profile updated :-
-                  <span className="text-gray-500 text-xs">{player?.userId?.updatedAt}</span>
+                  <span className="text-gray-500 text-xs">
+                    {player?.userId?.updatedAt}
+                  </span>
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+        <div role="main" class="flex flex-col items-center justify-center mt-7">
+          <h1 class="text-4xl font-semibold leading-9 text-center text-gray-800 dark:text-gray-50">
+            Player gallery
+          </h1>
+        </div>
+
+        <div className="relative overflow-x-scroll mt-4  flex flex-col min-w-0 mb-6 break-words bg-white rounded-2xl bg-clip-border m-auto p-auto border-0 shadow-2xl">
+          <div className="flex   pb-10 hide-scroll-bar mt-4">
+            {gallery.map((item) => (
+              <div className="flex flex-nowrap md:ml-20 ml-10 hide-scroll-bar">
+                {item.imageUrl.map((url, index) => (
+                  <div class="flex flex-col  ">
+                    <div class="flex flex-grow">
+                      <div class="max-w-md bg-gray-100 shadow-xl transform transition hover:scale-95 duration-300 ease-in-out rounded-xl p-6 mr-5">
+                        <div class="relative   w-[20vw]  h-[50vh] ">
+                          <img
+                            src={url}
+                            alt="Just a flower"
+                            class="object-cover  w-[40vw]  h-[50vh]"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>

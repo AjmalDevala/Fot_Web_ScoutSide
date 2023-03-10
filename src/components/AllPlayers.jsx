@@ -63,6 +63,7 @@ function AllPlayers() {
       <div className="relative  mt-4 w-5/6 flex flex-col min-w-0 mb-6 break-words bg-orange-300/60 rounded-2xl bg-clip-border m-auto p-auto border-0 shadow-2xl">
         <div className="flex overflow-x-scroll pb-10 hide-scroll-bar mt-4">
           <div className="flex flex-nowrap md:ml-20 ml-10 hide-scroll-bar">
+
             {player.filter(searchData).map((player) => (
               <div class="max-w-md w-72 bg-gray-100 shadow-xl transform transition hover:scale-95 duration-300 ease-in-out rounded-xl p-6 mr-5">
                 <div class="flex flex-col ">
@@ -108,7 +109,7 @@ function AllPlayers() {
               </div>
             ))}
           </div>
-        </div>
+           </div>
         </div>
 
 
@@ -155,6 +156,7 @@ function AllPlayers() {
           </div>
         </div>
       </div>
+      
       <div className="relative  mt-4 w-5/6 flex flex-col min-w-0 mb-6 break-words bg-orange-300/60 rounded-2xl bg-clip-border m-auto p-auto border-0 shadow-2xl">
         <h1>heder</h1>
         <div className="flex overflow-x-scroll pb-10 hide-scroll-bar mt-4">
