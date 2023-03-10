@@ -196,7 +196,7 @@ function SinglePage() {
 
         <div className="relative overflow-x-scroll mt-4  flex flex-col min-w-0 mb-6 break-words bg-white rounded-2xl bg-clip-border m-auto p-auto border-0 shadow-2xl">
           <div className="flex   pb-10 hide-scroll-bar mt-4">
-            {gallery.map((item) => (
+            {gallery && gallery.map((item) => (
               <div className="flex flex-nowrap md:ml-20 ml-10 hide-scroll-bar">
                 {item.imageUrl.map((url, index) => (
                   <div class="flex flex-col  ">
